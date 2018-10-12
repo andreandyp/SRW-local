@@ -1,0 +1,404 @@
+body {
+
+    font-family: 'Raleway';
+    font-size: 16px;
+    font-weight: 300;
+    color: #ccffff;
+    line-height: 30px;
+    text-align: center;
+         
+
+}
+
+strong { 
+	font-weight: 500; 
+}
+a, a:hover, a:focus {
+	text-decoration: none;
+}
+h1 {
+	margin-top: 10px;
+	font-size: 38px;
+    font-weight: 100;
+    line-height: 50px;
+}
+h3 {
+	font-size: 22px;
+    font-weight: 300;
+    color:#fff;
+}
+
+h2{
+   
+    font-size: 16px;
+    text-align: center;
+
+    font-family: "Lato", sans-serif;
+    color:#fff;
+}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
+body, html {
+    height: 100%;
+    color: #777;
+    line-height: 1.8;
+}
+/*Titulo */
+.title {
+
+    font-family: 'Raleway';
+    font-size: 96px;
+    font-weight: 300;
+    color: #000033;
+    line-height: 30px;
+    text-align: center;
+
+         
+
+}
+
+.titleregistro{
+
+   color: #ccffff;
+
+}
+/*----------------------------Barra de pestañas---------------------------*/
+
+/* Style the tab */
+.tab {
+    overflow: hidden;  
+    -moz-border-radius: 10px 10px 0 0; 
+    -webkit-border-radius: 10px 10px 0 0; 
+    border-radius: 10px 10px 0 0;
+    background-color: #009999;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 40px;
+      color: #fff; 
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+    
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+
+    background-color:#ccfff;
+    opacity: 0.6; 
+     color: #fff; 
+
+
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+     opacity: 0.6; 
+    color: #fff; 
+    background-color: #003333;
+}
+.tab button:focus {
+   
+    color: #fff; 
+    background:#004d4d; 
+}
+
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+}
+
+/*--------------------fin barra----------------------------*/
+
+
+/* Create a Parallax Effect */
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.w3-wide {letter-spacing: 10px;}
+.w3-hover-opacity {cursor: pointer;}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1, .bgimg-2, .bgimg-3 {
+        background-attachment: scroll;
+    }
+}
+
+/* Contenidos y Formulario*/
+.backstyle {
+    font-family: 'Raleway';
+    font-size: 16px;
+    font-weight: 300;
+   
+    line-height: 30px;
+    text-align: center;
+ 
+    background-image: url('../imagenes/fondocafe.jpg');
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color:#ffffff;
+    z-index:1;
+    
+}
+.backstyle::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+
+
+}
+
+
+
+.mymodalhf{
+
+     background-color: #222733;
+}
+.my-content {
+    padding: 0px 0 250px 0;
+}
+.my-content .mydescription {
+    margin: 20px 0 10px 0;
+}
+.my-content .mydescription p { 
+    opacity: 0.5; 
+}
+.myform-cont {
+    margin-top: 35px;
+    width:49.5%;
+    display:inline-block;
+    height:49.5%;
+    overflow:hidden;
+ 
+	
+}
+.avatar{
+
+  border-radius: 50%;
+
+}
+.myform-top {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;
+    background: rgba(0, 0, 0, 0.8);
+    -moz-border-radius: 10px 10px 0 0; 
+    -webkit-border-radius: 10px 10px 0 0; 
+    border-radius: 10px 10px 0 0;
+    
+}
+
+.myform-bottom {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;
+    background: rgba(0, 0, 0, 0.8);
+    -moz-border-radius: 10px 10px 0 0; 
+    -webkit-border-radius: 10px 10px 0 0; 
+    border-radius: 0 0 10px 10px;
+    
+
+}
+
+.myform-center {
+    overflow: hidden;
+    padding: 0 25px 15px 25px;
+    background: rgba(0, 0, 0, 0.8);
+    
+    
+}
+.myform-top-left { 
+    float: left;
+    width: 75%;
+    padding-top: 25px;
+    text-align: left;
+}
+.myform-top-left-register { 
+    float: left;
+    width: 50%;
+    padding-top: 30px;
+    text-align: center;
+}
+.myform-top-right-register {
+    float: right;
+    width: 50%;
+    padding-top: 30px;
+    text-align: right;
+
+}
+.myform-top-left  { 
+    opacity: 0.8; 
+}
+.myform-top-right {
+    float: right;
+    width: 25%;
+    padding-top: 25px;
+    font-size: 66px;
+    text-align: right;
+    opacity: 0.3;
+   
+}
+.myform-top-right-user {
+    float: right;
+    width: 65%;
+    padding-top: 25px;
+    font-size: 15px;
+    text-align: left;
+    
+   
+}
+.myform-top-right-user-title {
+    float: right;
+    width: 65%;
+    padding-top: 25px;
+    font-size: 25px;
+    text-align: left;
+
+   
+}
+.myform-top-left-user {
+    float: left;
+    width: 35%;
+    padding-top: 25px;
+    font-size: 30px;
+    text-align: left;
+  
+}
+.myform-bottom-user {
+    padding: 25px 25px 30px 25px;
+    background: rgb(0, 0, 26);
+    -moz-border-radius: 0 0 10px 10px; 
+    -webkit-border-radius: 0 0 10px 10px; 
+    border-radius: 0 0 10px 10px;
+
+    
+}
+
+.color-bottom{
+    font-family: 'Raleway';
+    font-size: 25px;
+    font-weight: 800;
+    color: #000033;
+    line-height: 30px;
+    text-align: center;
+
+
+}
+.myform-bottom .mybtn {
+ 
+    width: 35%;
+
+}
+
+}
+input[type="text"], 
+input[type="password"], 
+textarea, 
+textarea.form-control {
+    height: 50px;
+    vertical-align: middle;
+    background: #fff;
+    border: 3px solid #fff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 50px;
+    
+}
+input[type="text"]:focus, 
+input[type="password"]:focus, 
+textarea:focus, 
+textarea.form-control:focus {
+    background: #fff;
+    border: 2px solid #1AAE88;
+}
+
+button.mybtn {
+    height: 50px;
+    background: #1AAE88;
+    border: 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 40px;
+    color: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+    
+}
+button.mybtn:hover, button.mybtn:active { 
+    opacity: 0.6; 
+    color: #fff; 
+}
+button.mybtn:focus { 
+    opacity: 0.6;  
+    color: #fff; 
+    background: #de615e; 
+}
+
+/*LOGIN REDES SOCIALES*/
+
+.mysocial-login {
+    margin-top: 35px;
+}
+.mysocial-login-buttons {
+    margin-top: 25px;
+}
+.mybtn-social {
+    display: inline-block;
+    height: 50px;
+    margin: 5px;
+    padding: 15px 20px 0 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #fff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 16px;
+    color: #fff;
+    -moz-border-radius: 4px; 
+    -webkit-border-radius: 4px; 
+    border-radius: 4px;
+}
+.mybtn-social:hover, .mybtn-social:focus, .mybtn-social:active:focus { 
+    outline: 0;
+    opacity: 0.6; 
+    background: rgba(0, 0, 0, 0.3); 
+    color: #fff; 
+}
+
+/* Media queries */
+@media (min-width: 992px) and (max-width: 1199px) {}
+
+@media (min-width: 768px) and (max-width: 991px) {}
+
+@media (max-width: 767px) {
+    
+    .mytop-content { padding: 60px 0 110px 0; }
+
+}
+
+@media (max-width: 415px) {
+    
+    h1, h2 { font-size: 32px; }
+
+}

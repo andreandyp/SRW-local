@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Formulario Registro</title>
+ 
+    <!-- CSS de Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> <!--Iconos--> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500" >
+    <link rel="stylesheet" href="css/estilofragmentacion.css">
+    
+  </head>
+
+  <body onload="openFragmento(event, 'FH')">
+    <div class="my-content backstyle" >
+      <div class="tab">
+          
+          <button class="tablinks" onclick="openFragmento(event, 'FH')">Fragmentación Horizontal
+          </button>
+          <button class="tablinks" onclick="openFragmento(event, 'FV')">Fragmentación Vertical</button>
+
+      </div>
+
+      <div id="FH" class="tabcontent">
+        
+          <!--                         Definir condiciones de fragmentacion                         -->
+                <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Definir condiciones de fragmentación</h3>
+                        
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Selecciona una BD</h2>
+                                    <select id="bd" class="form-control">
+                                        <option value="mydb">mydb</option>
+                                    </select>
+                                    <input type="button" value="Conectar" class="btn btn-success" onclick="conectar()"/>
+                                    <input type="button" value="Desconectar" class="btn btn-danger" onclick="desconectar()"/>
+                                </div>
+                                <div class="col-sm-6"> 
+                                    <h2>Leer esquema (Relación)</h2> 
+                                    <select name="Relacion" id="Relacion" class="form-control">
+                                    </select>
+                                </div>
+                            </div><!--fin row-->
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+
+    <!--                         Generar fragmentos miniterminos                                       -->
+                </div><!--fin my formcont-->
+                   <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Generar fragmentos miniterminos </h3>
+                        
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                          
+                              <h2>Selecciona 2 predicados simples (con la tecla CTRL) para formar un fragmento minitérmino</h2> 
+                            <div class="row"> 
+
+                                  
+                                <div class="col-sm-7 offset-3 ">          
+                             
+                                   <select multiple id="predicados"></select>
+                                </div><!--fin class sm5-->
+                                <div class="col-sm-9 offset-4">
+                             
+                                         <button class="mybtn" id="FM" onclick="generarMinis()">Generar F.M</button>
+                                </div><!--fin class sm5-->
+                           
+                            </div><!--fin row-->
+     
+                          
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+                </div><!--fin my formcont-->
+
+  <!--                         Definir predicados simples                                              -->
+
+                <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Definir predicados simples  </h3>
+                        
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                            <div class="row"> 
+                                <div class="col-sm-5 "> 
+                                    <h2>Atributo</h2> 
+                                </div>
+                                <div class="col-sm-5 offset-1">          
+                                    <select name="Atributo" id="Atributo" class="form-control">
+                                    </select>
+                                </div><!--fin class sm5-->
+                            </div><!--fin row-->
+                        </div><!--            fin fromgroup             -->
+                        <div class="form-group">
+                            <div class="row">
+                                            <br>
+                                  <div class="col-sm-5 "> 
+                                        <h2>Operador</h2> 
+                                  </div>
+                                  <div class="col-sm-5 offset-1">          
+                                        <select name="Operador" id="Operador" class="form-control">
+                                            <option value="&lt;">&lt;</option>
+                                            <option value="&lt;=">&lt;=</option>
+                                            <option value="&gt;">&gt;</option>
+                                            <option value="&gt;=">&gt;=</option>
+                                            <option value="=">=</option>
+                                            <option value="&lt;&gt;">&lt;&gt;</option>
+                                        </select>
+                                  </div><!--fin class sm5-->
+                            </div><!--            fin row                -->
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 "> 
+                                    <h2>Valor</h2> 
+                                </div>
+                                <div class="col-sm-5 offset-1">          
+                                    <input type="text" name="Valor" id="Valor" class="form-control" />
+                                </div><!--fin class sm5-->
+                            </div><!--             fin row               -->
+                         </div><!--fin fromgroup-->
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 "> 
+                                    <h2>Negar</h2> 
+                                </div>
+                                <div class="col-sm-5 offset-1">          
+                                    <input type="checkbox" name="Negacion" id="Negacion" class="form-control" />
+                                </div><!--fin class sm5-->
+                            </div><!--             fin row               -->
+                         </div><!--fin fromgroup-->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="button" value="Añadir predicado simple" class="btn btn-primary" onclick="añadirPredicado()">
+                                </div>
+                            </div><!--             fin row               -->
+                        </div><!--fin fromgroup-->
+
+                      </div><!--fin formbottom-->             
+                </div><!--fin my formcont-->
+                 
+<!--                        Colocar fragmentos minitèrminos                                                        -->
+
+                 <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Colocar fragmentos minitérminos</h3>
+                        
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                            <div class="row"> 
+                        
+                                 <div class="col-sm-7 offset-2">          
+                             
+                                   <select id="FragM" disabled multiple></select>
+
+                                </div><!--fin class sm5-->
+                            </div><!--fin row-->
+                         </div><!--fin fromgroup-->
+                          <div class="form-group">
+                            <div class="row"> 
+                        
+                                           <br>
+                                  <div class="col-sm-1 offset-2"> 
+                                        <h2>Sitio</h2> 
+                                  </div>
+                                  <div class="col-sm-3 ">          
+                                        <select name="Relacion" id="sitio" class="form-control">
+                                            <option>hue</option>
+                                        </select>
+                                  </div>
+                                 <div class="col-sm-5 offset-1">          
+                                     <button class="mybtn" id="Enviar">Enviar</button>
+                                  </div>
+
+                                   
+                                </div><!--fin class sm5-->
+                            </div><!--fin row-->
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+
+             
+                </div><!--fin my formcont-->
+              
+               
+       </div>
+
+      <div id="FV" class="tabcontent">
+          <h3>Fragmentación Vertical</h3>
+          <p>En progreso</p> 
+      </div>
+      
+      <script src="js/scripts.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
