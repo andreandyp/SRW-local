@@ -1,4 +1,4 @@
-var nombreBD;
+var nombreBD, nombreTabla;
 var BD = require("./config/bd");
 
 function openFragmento(evt, fragName) {
@@ -18,7 +18,7 @@ function openFragmento(evt, fragName) {
 function conectar() {
 	//Ruta relativa al archivo html
 	nombreBD = document.querySelector("#bd").value;
-	BD.conectar("localhost", "root", nombreBD, "").then(tablas => {
+	BD.conectar("localhost", "root", nombreBD, "Andy94").then(tablas => {
 		añadirTablas(tablas);
 	});
 }
@@ -47,11 +47,28 @@ function desconectar(){
 }
 
 function añadirAtributos(e){
-	BD.getAtributos(nombreBD, e.target.value).then(atributos => {
+	nombreTabla = e.target.value;
+	BD.getAtributos(nombreBD, nombreTabla).then(atributos => {
 		var Atributo = document.querySelector("#Atributo");
+		var tablaNAtributos = document.querySelector("#numeroAtributo");
+		var tablaAtributos = document.querySelector("#nombreAtributo");
+		var tablaTipo = document.querySelector("#tipoAtributo");
+
 		//Limpiar los antiguos
 		while (Atributo.firstChild) {
 			Atributo.removeChild(Atributo.firstChild);
+		}
+
+		while (tablaNAtributos.firstChild){
+			tablaNAtributos.removeChild(tablaNAtributos.firstChild);
+		}
+
+		while (tablaAtributos.firstChild){
+			tablaAtributos.removeChild(tablaAtributos.firstChild);
+		}
+
+		while (tablaTipo.firstChild) {
+			tablaTipo.removeChild(tablaTipo.firstChild);
 		}
 
 		for (var i = 0; i < atributos.length; i++) {
@@ -59,6 +76,18 @@ function añadirAtributos(e){
 			option.value = atributos[i].column_name;
 			option.textContent = atributos[i].column_name;
 			Atributo.appendChild(option);
+
+			var th = document.createElement("th");
+			th.textContent = "Atributo "+i;
+			tablaNAtributos.appendChild(th);
+
+			var nombre = document.createElement("td");
+			nombre.textContent = atributos[i].column_name;
+			tablaAtributos.appendChild(nombre);
+
+			var tipo = document.createElement("td");
+			tipo.textContent = atributos[i].data_type;
+			tablaTipo.appendChild(tipo);
 		}
 	});
 }
@@ -81,7 +110,7 @@ function añadirPredicado(){
 	texto += negacion ? ")" : "";
 	predicado.textContent = texto;
 	
-	var valor = atributo + obtenerOperador(operador, negacion) + "'" + valor + "'";
+	var valor = nombreTabla + "." + atributo + obtenerOperador(operador, negacion) + "'" + valor + "'";
 	predicado.value = valor;
 
 	var predicados = document.querySelector("#predicados");

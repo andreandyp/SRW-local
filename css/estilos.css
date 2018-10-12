@@ -320,7 +320,7 @@ body, html {
 
 }
 
-}
+
 input[type="text"], 
 input[type="password"], 
 textarea, 
@@ -407,5 +407,9 @@ button.mybtn:focus {
 @media (max-width: 415px) {
     
     h1, h2 { font-size: 32px; }
+
+}
+
+tbody:nth-child(1){
 
 }

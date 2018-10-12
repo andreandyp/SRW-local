@@ -24,7 +24,7 @@ function getTables(nombreBD){
 }
 
 function getAtributos(nombreBD, nombreTabla){
-	return base.query("SELECT column_name FROM information_schema.columns WHERE table_schema = ? AND table_name = ?", 
+	return base.query("SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = ? AND table_name = ?", 
 	[nombreBD, nombreTabla]).then(function (rows) {
 			return rows[0];
 		});
