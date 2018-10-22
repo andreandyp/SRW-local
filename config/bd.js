@@ -30,6 +30,13 @@ function getAtributos(nombreBD, nombreTabla){
 		});
 }
 
+function validarPredicado(tabla, predicado, elemento){
+	return base.query("SELECT * FROM " + tabla + " WHERE " + predicado).then(rows => {
+		rows.elemento = elemento;
+		return rows;
+	});
+}
+
 module.exports = {
 	conectar: conectar,
 	getTables: getTables,
@@ -38,5 +45,6 @@ module.exports = {
 		base.end(function(){
 			alert("Conexión terminada");
 		});
-	}
+	},
+	validarPredicado: validarPredicado
 };

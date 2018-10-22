@@ -103,18 +103,34 @@ function añadirPredicado(){
 		return alert("Inserta un valor");
 	}
 
-	var predicado = document.createElement("option");
+	var predicado = document.createElement("p");
+	var tabla = document.querySelector("#"+nombreTabla);
+
+	if(!tabla){
+		tabla = document.createElement("div");
+		tabla.setAttribute("id", nombreTabla);
+		var label = document.createElement("h4");
+		label.textContent = nombreTabla;
+		tabla.appendChild(label);
+		var predicados = document.querySelector("#predicados");
+		predicados.appendChild(tabla);
+	}
 
 	var texto = negacion ? "~(" : "";
 	texto += atributo + " " + operador + " " + valor;
 	texto += negacion ? ")" : "";
-	predicado.textContent = texto;
+	var strong = document.createElement("strong");
+	strong.style = "display: block;"
+	strong.textContent = texto;
+	predicado.appendChild(strong);
 	
-	var valor = nombreTabla + "." + atributo + obtenerOperador(operador, negacion) + "'" + valor + "'";
-	predicado.value = valor;
+	var sql = nombreTabla + "." + atributo + obtenerOperador(operador, negacion) + "'" + valor + "'";
+	var em = document.createElement("em");
+	em.style = "display: block;"
+	em.textContent = sql;
+	predicado.appendChild(em);
 
-	var predicados = document.querySelector("#predicados");
-	predicados.appendChild(predicado);
+	tabla.appendChild(predicado);
 }
 
 function obtenerOperador(op, negacion){
@@ -122,7 +138,6 @@ function obtenerOperador(op, negacion){
 		return op;
 	}
 
-	console.log(op);
 	switch(op){
 		case "<":
 			return ">";
@@ -139,21 +154,28 @@ function obtenerOperador(op, negacion){
 	}
 }
 
-function generarMinis(){
+function validarPS(){
 	var predicados = document.querySelector("#predicados");
-	var opciones = predicados.options;
-	var minitermino = [];
+	var tablas = predicados.childNodes;
+	var predis, sql;
 
-	for(var i = 0; i < opciones.length; i++){
-		if(opciones[i].selected){
-			minitermino.push(opciones[i]);
+	for(var i = 0; i < tablas.length; i++){
+		predis = tablas[i].childNodes;
+		for(var j = 1; j < predis.length; j++){
+			var elem = predis[j];
+			sql = elem.lastChild.textContent;
+			//console.log(sql);
+			//console.log(sql.split(".")[0]);
+			BD.validarPredicado(sql.split(".")[0], sql, elem).then(filas => {
+				if(filas[0].length !== 0){
+					filas.elemento.style = "color: green";
+				}else{
+					filas.elemento.style = "color: red";
+				}
+			});
 		}
 	}
-	if(minitermino.length !== 2){
-		return alert("selecciona solo 2")
-	}
-
-	formarMinis(minitermino);
+	
 }
 
 function formarMinis(minitermino){
