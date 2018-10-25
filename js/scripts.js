@@ -1,5 +1,6 @@
 var nombreBD, nombreTabla;
 var BD = require("./config/bd");
+var minis = {};
 
 function openFragmento(evt, fragName) {
 	var i, tabcontent, tablinks;
@@ -97,7 +98,6 @@ function añadirPredicado(){
 	var atributo = document.querySelector("#Atributo").value;
 	var operador = document.querySelector("#Operador").value;
 	var valor = document.querySelector("#Valor").value;
-	var negacion = document.querySelector("#Negacion").checked;
 
 	if(!valor){
 		return alert("Inserta un valor");
@@ -116,20 +116,31 @@ function añadirPredicado(){
 		predicados.appendChild(tabla);
 	}
 
-	var texto = negacion ? "~(" : "";
-	texto += atributo + " " + operador + " " + valor;
-	texto += negacion ? ")" : "";
+	var input = document.createElement("input");
+	input.type = "checkbox";
+	input.disabled = true;
+	predicado.append(input);
+
+	var opTexto = document.createElement("span");
+	opTexto.textContent = operador;
+	opTexto.classList.add("operador");
+
 	var strong = document.createElement("strong");
-	strong.style = "display: block;"
-	strong.textContent = texto;
+	strong.appendChild(document.createTextNode(atributo));
+	strong.appendChild(opTexto);
+	strong.appendChild(document.createTextNode(valor));
 	predicado.appendChild(strong);
 	
-	var sql = nombreTabla + "." + atributo + obtenerOperador(operador, negacion) + "'" + valor + "'";
+	
+	var opSQL = document.createElement("span");
+	opSQL.textContent = operador;
 	var em = document.createElement("em");
-	em.style = "display: block;"
-	em.textContent = sql;
-	predicado.appendChild(em);
+	em.style.display = "block";
+	em.appendChild(document.createTextNode(nombreTabla + "." + atributo));
+	em.appendChild(opSQL);
+	em.appendChild(document.createTextNode("'" + valor + "'"));
 
+	predicado.appendChild(em);
 	tabla.appendChild(predicado);
 }
 
@@ -137,7 +148,7 @@ function obtenerOperador(op, negacion){
 	if(!negacion){
 		return op;
 	}
-
+	
 	switch(op){
 		case "<":
 			return ">";
@@ -145,7 +156,7 @@ function obtenerOperador(op, negacion){
 			return ">=";
 		case ">":
 			return "<";
-		case ">=;":
+		case ">=":
 			return "<=";
 		case "=":
 			return "<>";
@@ -164,13 +175,15 @@ function validarPS(){
 		for(var j = 1; j < predis.length; j++){
 			var elem = predis[j];
 			sql = elem.lastChild.textContent;
-			//console.log(sql);
-			//console.log(sql.split(".")[0]);
 			BD.validarPredicado(sql.split(".")[0], sql, elem).then(filas => {
 				if(filas[0].length !== 0){
-					filas.elemento.style = "color: green";
+					filas.elemento.firstChild.disabled = false;
+					filas.elemento.style.backgroundColor = "green";
+					filas.elemento.style.color = "white";
 				}else{
-					filas.elemento.style = "color: red";
+					filas.elemento.style.backgroundColor = "red";
+					filas.elemento.style.color = "white";
+					
 				}
 			});
 		}
@@ -178,12 +191,114 @@ function validarPS(){
 	
 }
 
-function formarMinis(minitermino){
-	var fragmentos = document.querySelector("#FragM");
-	
-	var mini = document.createElement("option");
-	mini.textContent = minitermino[0].textContent + " ^ " + minitermino[1].textContent;
-	mini.value = minitermino[0].value + " AND " + minitermino[1].value;
+function obtenerPS(minitermino){
+	var tablas = document.querySelector("#predicados").childNodes;
 
-	fragmentos.appendChild(mini);
+	for(var i = 0; i < tablas.length; i++){
+		var predicados = [];
+		var tabla = tablas[i].childNodes;
+		//Desde 1 para omitir el nombre de la tabla
+		for(var j = 1; j < tabla.length; j++){
+			var predicado = tabla[j].querySelector("input");
+			if(predicado.checked){
+				predicados.push(tabla[j]);
+			}
+		}
+
+		if(predicados.length >= 2){
+			crearMinis(predicados);
+		}
+	}
+}
+
+function crearMinis(predicados){
+	var pred1, pre2;
+	for(var i = 0, j = 1; i < predicados.length; i++, j++){
+		pred1 = predicados[i];
+		pred2 = predicados[j];
+		if(!pred2){
+			return;
+		}
+
+		var num = 0;
+		while(num < 4){
+			var negacion1, negacion2;
+			switch(num){
+				case 0:
+					negacion1 = false;
+					negacion2 = false;
+					break;
+				case 1:
+					negacion1 = true;
+					negacion2 = false;
+					break;
+				case 2:
+					negacion1 = false;
+					negacion2 = true;
+					break;
+				case 3:
+					negacion1 = true;
+					negacion2 = true;
+			}
+			var p = document.createElement("p"),
+				input = document.createElement("input"),
+				texto = document.createElement("strong"),
+				sql = document.createElement("em");
+
+			input.type = "checkbox"
+			input.disabled = true;
+
+			texto.textContent = negacion1 ? "~(" : "";
+			texto.textContent += pred1.querySelector("strong").textContent;
+			texto.textContent += negacion1 ? ")" : "";
+			texto.textContent += "^";
+			texto.textContent += negacion2 ? "~(" : "";
+			texto.textContent += pred2.querySelector("strong").textContent;
+			texto.textContent += negacion2 ? ")" : "";
+
+
+			sql.textContent = pred1.querySelector("em").childNodes[0].textContent;
+			sql.textContent += obtenerOperador(pred1.querySelector("em").childNodes[1].textContent, negacion1);
+			sql.textContent += pred1.querySelector("em").childNodes[2].textContent;
+			sql.textContent += " AND ";
+			sql.textContent += pred2.querySelector("em").childNodes[0].textContent;
+			sql.textContent += obtenerOperador(pred2.querySelector("em").childNodes[1].textContent, negacion2);
+			sql.textContent += pred2.querySelector("em").childNodes[2].textContent;
+			sql.style.display = "block";
+
+			p.appendChild(input);
+			p.appendChild(texto);
+			p.appendChild(sql);
+
+			var div = document.createElement("div");
+			div.style.backgroundColor = "white";
+			div.style.color = "black";
+			div.appendChild(p);
+
+			(document.querySelector("#FragM")).appendChild(div);
+			++num;
+		}
+	}
+
+}
+
+function validarMinis() {
+	var minis = document.querySelector("#FragM").childNodes;
+	for (var i = 0; i < minis.length; i++) {
+
+		var elem = minis[i].querySelector("p em");
+		var sql = elem.textContent;
+		BD.validarPredicado(sql.split(".")[0], sql, minis[i]).then(filas => {
+			if (filas[0].length !== 0) {
+				console.log(filas[0][1]["id.*"]);
+				filas.elemento.firstChild.firstChild.disabled = false;
+				filas.elemento.style.backgroundColor = "green";
+				filas.elemento.style.color = "white";
+			} else {
+				filas.elemento.style.backgroundColor = "red";
+				filas.elemento.style.color = "white";
+
+			}
+		});
+	}
 }

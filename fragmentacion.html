@@ -2,7 +2,6 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Formulario Registro</title>
@@ -12,27 +11,21 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css"> <!--Iconos--> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500" >
     <link rel="stylesheet" href="css/estilofragmentacion.css">
-    
   </head>
 
   <body onload="openFragmento(event, 'FH')">
-    <div class="my-content backstyle" >
+    <div class="my-content backstyle">
       <div class="tab">
-          
-          <button class="tablinks" onclick="openFragmento(event, 'FH')">Fragmentación Horizontal
-          </button>
-          <button class="tablinks" onclick="openFragmento(event, 'FV')">Fragmentación Vertical</button>
-
+        <button class="tablinks" onclick="openFragmento(event, 'FH')">Fragmentación Horizontal</button>
+        <button class="tablinks" onclick="openFragmento(event, 'FV')">Fragmentación Vertical</button>
       </div>
-
       <div id="FH" class="tabcontent">
         
           <!--                         Definir condiciones de fragmentacion                         -->
-                <div class="  myform-cont" >
+                <div class="myform-cont" >
                       <div class="myform-top">
                           <div class="myform-top-left">
                             <h3>Definir condiciones de fragmentación</h3>
-                        
                           </div>                
                       </div>
 
@@ -78,21 +71,21 @@
 
                       <div class="myform-bottom">
                         <div class="form-group">
-                          
-                              <h2>Selecciona 2 predicados simples (con la tecla CTRL) para formar un fragmento minitérmino</h2> 
+                            <h2>Selecciona 2 predicados simples válidos para crear un fragmento minitérmino</h2> 
                             <div class="row"> 
                                 <div class="col-sm-12">
                                    <div id="predicados" class="col-sm-12" style="background-color: white"></div>
-                                </div><!--fin class sm5-->
-                                <div class="col-sm-9 offset-4">
-                             
-                                         <button class="mybtn" id="FM" onclick="validarPS()">Validar PS</button>
-                                </div><!--fin class sm5-->
-                           
+                                </div>
+                                <div class="col-sm-2 offset-4">
+                                    <button class="btn btn-success" id="FM" onclick="validarPS()">Validar PS</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-success" onclick="obtenerPS()">Crear fragmentos minitérminos</button>
+                                </div>
                             </div><!--fin row-->
      
                           
-                         </div><!--fin fromgroup-->
+                        </div><!--fin fromgroup-->
                       </div><!--fin formbottom-->
                 </div><!--fin my formcont-->
 
@@ -180,19 +173,15 @@
 
                       <div class="myform-bottom">
                         <div class="form-group">
-                            <div class="row"> 
-                        
-                                 <div class="col-sm-7 offset-2">          
-                             
-                                   <select id="FragM" disabled multiple></select>
-
-                                </div><!--fin class sm5-->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="FragM"></div>
+                                </div>
                             </div><!--fin row-->
                          </div><!--fin fromgroup-->
+                         <button class="btn btn-success" onclick="validarMinis()">Validar Minitérminos</button>
                           <div class="form-group">
                             <div class="row"> 
-                        
-                                           <br>
                                   <div class="col-sm-1 offset-2"> 
                                         <h2>Sitio</h2> 
                                   </div>
