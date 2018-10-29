@@ -57,7 +57,6 @@ function fragmentar(sitio, nombreTabla, sql){
 			for(var key in filas[i]){
 				datos.push("'"+filas[i][key]+"'");
 			}
-			
 			baseFragmento.execute("INSERT INTO " + nombreTabla + " VALUES (" + datos.join(",") + ")");
 			datos = [];
 		}
