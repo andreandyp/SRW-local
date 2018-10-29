@@ -37,6 +37,30 @@ function validarPredicado(tabla, predicado, elemento){
 	});
 }
 
+function fragmentar(sitio, nombreTabla, sql){
+	var baseFragmento;
+	return mysql.createConnection({
+		host: sitio.host,
+		user: sitio.usuario,
+		database: sitio.nombreBD,
+		password: sitio.password
+	}).then(function (conn) {
+		baseFragmento = conn;
+		return base.query("SELECT * FROM "+nombreTabla+" WHERE "+sql);
+	}).then(function (rows) {
+		var filas = rows[0];
+		var datos = [];
+		for(var i = 0; i < filas.length; i++){
+			for(var key in filas[i]){
+				datos.push("'"+filas[i][key]+"'");
+			}
+			baseFragmento.execute("INSERT INTO " + nombreTabla + " VALUES (" + datos.join(",") + ")");
+		}
+	}).catch(function(error){
+		return error;
+	})
+}
+
 module.exports = {
 	conectar: conectar,
 	getTables: getTables,
@@ -46,5 +70,6 @@ module.exports = {
 			alert("Conexión terminada");
 		});
 	},
-	validarPredicado: validarPredicado
+	validarPredicado: validarPredicado,
+	fragmentar: fragmentar
 };

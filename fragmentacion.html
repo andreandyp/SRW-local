@@ -34,8 +34,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h2>Selecciona una BD</h2>
-                                    <select id="bd" class="form-control">
-                                        <option value="mydb">mydb</option>
+                                    <select id="bds" class="form-control">
                                     </select>
                                     <input type="button" value="Conectar" class="btn btn-success" onclick="conectar()"/>
                                     <input type="button" value="Desconectar" class="btn btn-danger" onclick="desconectar()"/>
@@ -187,12 +186,10 @@
                                   </div>
                                   <div class="col-sm-3 ">          
                                         <select name="Relacion" id="sitio" class="form-control">
-                                            <option value="s2">Sitio 2</option>
-                                            <option value="s3">Sitio 3</option>
                                         </select>
                                   </div>
                                  <div class="col-sm-5 offset-1">          
-                                     <button class="mybtn" id="Enviar">Enviar</button>
+                                     <button class="mybtn" id="crearfrag" onclick="fragmentar()">Crear fragmentos en sitio</button>
                                   </div>
 
                                    

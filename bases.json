@@ -1,0 +1,24 @@
+{
+	"bases": [{
+		"host": "localhost",
+		"usuario": "root",
+		"nombreBD": "mydb",
+		"password": "Andy94"
+	}],
+	"sitios": [{
+		"host": "localhost",
+		"usuario": "root",
+		"nombreBD": "sitio1",
+		"password": "Andy94"
+	}, {
+		"host": "",
+		"usuario": "root",
+		"nombreBD": "sitio2",
+		"password": ""
+	}, {
+		"host": "",
+		"usuario": "root",
+		"nombreBD": "sitio3",
+		"password": ""
+	}]
+}
