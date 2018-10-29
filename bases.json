@@ -11,14 +11,14 @@
 		"nombreBD": "sitio1",
 		"password": "Andy94"
 	}, {
-		"host": "",
+		"host": "10.100.69.25",
 		"usuario": "root",
 		"nombreBD": "sitio2",
-		"password": ""
+		"password": "root"
 	}, {
-		"host": "",
+		"host": "10.100.66.212",
 		"usuario": "root",
 		"nombreBD": "sitio3",
-		"password": ""
+		"password": "root"
 	}]
 }

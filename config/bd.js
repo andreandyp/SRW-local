@@ -6,7 +6,8 @@ function conectar(host, usuario, nombreBD, password) {
 		host: host,
 		user: usuario,
 		database: nombreBD,
-		password: password
+		password: password,
+		dateStrings: true
 	}).then(function (conn) {
 		alert("Conectado a la base");
 		base = conn;
@@ -43,21 +44,25 @@ function fragmentar(sitio, nombreTabla, sql){
 		host: sitio.host,
 		user: sitio.usuario,
 		database: sitio.nombreBD,
-		password: sitio.password
+		password: sitio.password,
+		dateStrings: true
 	}).then(function (conn) {
 		baseFragmento = conn;
 		return base.query("SELECT * FROM "+nombreTabla+" WHERE "+sql);
 	}).then(function (rows) {
 		var filas = rows[0];
 		var datos = [];
+		console.log(filas.length);
 		for(var i = 0; i < filas.length; i++){
 			for(var key in filas[i]){
 				datos.push("'"+filas[i][key]+"'");
 			}
+			
 			baseFragmento.execute("INSERT INTO " + nombreTabla + " VALUES (" + datos.join(",") + ")");
+			datos = [];
 		}
 	}).catch(function(error){
-		return error;
+		return alert(error);
 	})
 }
 

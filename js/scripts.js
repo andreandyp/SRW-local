@@ -170,7 +170,7 @@ function añadirPredicado(){
 	var eliminarPS = document.createElement("button");
 	eliminarPS.classList.add("btn", "btn-danger")
 	eliminarPS.textContent = "Eliminar";
-	eliminarPS.onclick = function() { eliminar(this); }
+	eliminarPS.onclick = function () { eliminarPredicado(this); }
 	predicado.appendChild(eliminarPS);
 
 	tabla.appendChild(predicado);
@@ -312,7 +312,7 @@ function crearMinis(predicados, nombreTabla){
 			var eliminarMini = document.createElement("button");
 			eliminarMini.classList.add("btn", "btn-danger")
 			eliminarMini.textContent = "Eliminar";
-			eliminarMini.onclick = function () { eliminar(this); }
+			eliminarMini.onclick = function () { eliminarMT(this); }
 
 			p.appendChild(input);
 			p.appendChild(texto);
@@ -337,8 +337,7 @@ function validarMinis() {
 		var minis = tablas[n].childNodes;
 		//Desde 1 para omitir el título
 		for (var i = 1; i < minis.length; i++) {
-
-			var elem = minis[i].querySelector("p em");
+			var elem = minis[i].querySelector("p em");			
 			var sql = elem.textContent;
 			BD.validarPredicado(sql.split(".")[0], sql, minis[i]).then(filas => {
 				if (filas[0].length !== 0) {
@@ -374,6 +373,10 @@ function fragmentar(){
 	}
 }
 
-function eliminar(elemento){
+function eliminarPredicado(elemento){
 	elemento.parentElement.parentElement.removeChild(elemento.parentElement);
+}
+
+function eliminarMT(elemento) {
+	elemento.parentElement.parentElement.parentElement.removeChild(elemento.parentElement.parentElement);
 }
