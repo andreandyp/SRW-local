@@ -20,7 +20,7 @@
         <button class="tablinks" onclick="openFragmento(event, 'FV')">Fragmentación Vertical</button>
       </div>
       <div id="FH" class="tabcontent">
-        
+       
           <!--                         Definir condiciones de fragmentacion                         -->
                 <div class="myform-cont" >
                       <div class="myform-top">
@@ -198,16 +198,166 @@
              
                 </div><!--fin my formcont-->
               
-               
-       </div>
+<!--                       Fragmentación Vertical                          -->
 
       <div id="FV" class="tabcontent">
-          <h3>Fragmentación Vertical</h3>
-          <p>En progreso</p> 
-      </div>
+    <!--                         Definir dominio de Fragmentacion                               -->
+                <div class="myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Definir dominio fragmentación</h3>
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h2>Selecciona una BD</h2>
+                                    <select id="bds" class="form-control">
+                                    </select>
+                                    <input type="button" value="Conectar" class="btn btn-success" onclick="conectar()"/>
+                                    <input type="button" value="Desconectar" class="btn btn-danger" onclick="desconectar()"/>
+                                </div>
+                                <div class="col-sm-6"> 
+                                    <h2>Cargar Relación</h2> 
+                                    <select name="Relacion" id="Relacion" class="form-control">
+                                    </select>
+                                </div>
+                            </div><!--fin row-->
+                            <div class="row">
+                                <table class="table table-condensed" id="tablaAtributos" style="background-color: white">
+                                    <thead id="numeroAtributo">
+                                    </thead>
+                                    <tbody>
+                                        <tr id="nombreAtributo"></tr>
+                                        <tr id="tipoAtributo"></tr>
+                                    </tbody>
+                                </table>
+                            </div><!--fin row-->
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+               </div><!--fin my formcont-->
+               <!--                         Expresiones algebraicas                                            -->
+
+                <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Expresiones Algebraicas  </h3>
+                        
+                          </div>   
+
+                      </div>  
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                          
+                            <div class="row"> 
+                                <div class="col-sm-12">
+                                   <div id="EAlgebraicas" class="col-sm-12" style="background-color: white"></div>
+                                </div>
+                               
+                                
+                            </div><!--fin row-->
+     
+                          
+                        </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->               
+                       
+                            
+                </div><!--fin my formcont-->
+
+ <!--                         Definir Numero de Fragmentos                              -->
+                <div class="myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Definir número de fragmentos </h3>
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                            <div class="row">
+                               
+                                <div class="col-sm-6"> 
+                                    <h2>Número de Fragmentos</h2> 
+                                    <select name="NumFrag" id="NumFrag" class="form-control">
+                                    </select>
+                                </div>
+                            </div><!--fin row-->
+                            
+
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+
+<!--                        Seleccionar Atributos                                    -->
+
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Seleccionar Atributos </h3>
+                        
+                         </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                        <div class="form-group">
+                          
+                            <div class="row"> 
+                                <div class="col-sm-12">
+                                   <div id="atributos" class="col-sm-12" style="background-color: white"></div>
+                                </div>
+                                <div class="col-sm-2 offset-4">
+                                    <button class="btn btn-success" id="FM" onclick="">Generar F.</button>
+                                </div>
+                                
+                            </div><!--fin row-->
+                          
+                        </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+
+
+               </div><!--fin my formcont-->
+                 
+<!--                        Colocar fragmentos minitèrminos                                                        -->
+
+                 <div class="  myform-cont" >
+                      <div class="myform-top">
+                          <div class="myform-top-left">
+                            <h3>Colocación de fragmentos </h3>
+                        
+                          </div>                
+                      </div>
+
+                      <div class="myform-bottom">
+                                          
+                          <div class="form-group">
+                            <div class="row"> 
+                                  
+                                        <h2>Sitio</h2> 
+                                 
+                                  <div class="col-sm-4 offset-2 ">          
+                                        <select name="Relacion" id="sitio" class="form-control">
+                                        </select>
+                                  </div>
+                                 <div class="col-sm-4 offset-1">          
+                                     <button class="mybtn" id="crearfrag" onclick="fragmentar()">Enviar</button>
+                                  </div>
+
+                                   
+                                </div><!--fin class sm5-->
+                            </div><!--fin row-->
+                         </div><!--fin fromgroup-->
+                      </div><!--fin formbottom-->
+
+             
+                </div><!--fin FV-->
+              
+         </div><!--fin backstyle-->
+       </div><!--fin body-->
       
       <script src="js/scripts.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
   </body>
+
+
 </html>
