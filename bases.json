@@ -3,7 +3,7 @@
 		"host": "localhost",
 		"usuario": "root",
 		"nombreBD": "mydb",
-		"password": "Andy94"
+		"password": "root"
 	}],
 	"sitios": [{
 		"host": "localhost",
