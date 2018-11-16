@@ -3,7 +3,7 @@ var win, app = electron.app;
 
 function crearVentana(){
 	win = new electron.BrowserWindow({ width: 1024, height: 600 })
-	win.loadFile("fragmentacion.html");
+	win.loadFile("fragmentacion2.html");
 	//win.setMenu(null);
 }
 
