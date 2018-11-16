@@ -126,8 +126,37 @@ document.querySelector("#Relacion").onchange = añadirAtributos;
 
 function generarFragmentos(){
 	var atributos = (document.querySelector("#tablaAtributos2 tbody")).children;
+	var expresiones = document.querySelector("#EAlgebraicas");
+	var tablaActual = document.querySelector("#Relacion").value;
+
+	var tablaFrag = document.querySelector("#tabla-"+tablaActual);
+	if(!tablaFrag){
+		tablaFrag = document.createElement("div");
+		
+		var titulo = document.createElement("h3");
+		titulo.textContent = tablaActual;
+		titulo.style.color = "black";
+		
+		tablaFrag.appendChild(titulo);
+		expresiones.appendChild(tablaFrag);
+	}
+	var sql = document.createElement("em");
+	var columnas = document.createElement("strong");
+	columnas.style.display = "block";
 	for(var i = 0; i < atributos.length; i++){
-		console.log(atributos[i].children[2].checked);
+		var atri = atributos[i];
+		if(atri.children[2].checked){
+			if(sql.textContent){
+				sql.textContent += ", ";
+			}
+			if(columnas.textContent){
+				columnas.textContent += ", ";
+			}
+			sql.textContent += atri.children[0].textContent + " " + atri.children[1].textContent + "(100)";
+			columnas.textContent += atri.children[0].textContent;
+			tablaFrag.appendChild(columnas);
+			tablaFrag.appendChild(sql);
+		}
 	}
 }
 
