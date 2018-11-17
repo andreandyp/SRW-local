@@ -11,7 +11,7 @@
 		"nombreBD": "sitio1",
 		"password": "root"
 	}, {
-		"host": "10.100.70.119",
+		"host": "10.100.77.249",
 		"usuario": "root",
 		"nombreBD": "sitio2",
 		"password": "root"

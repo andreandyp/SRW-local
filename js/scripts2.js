@@ -148,7 +148,10 @@ function generarFragmentos(){
 	}
 	var sql = document.createElement("em");
 	var columnas = document.createElement("strong");
+	var input = document.createElement("input");
+	input.type = "checkbox";
 	columnas.style.display = "block";
+	sql.style.display = "block";
 	for(var i = 0; i < atributos.length; i++){
 		var atri = atributos[i];
 		if(atri.children[2].checked){
@@ -162,6 +165,7 @@ function generarFragmentos(){
 			columnas.textContent += atri.children[0].textContent;
 			tablaFrag.appendChild(columnas);
 			tablaFrag.appendChild(sql);
+			tablaFrag.appendChild(input);
 		}
 	}
 
@@ -173,10 +177,14 @@ function fragmentar(){
 	var indice = document.querySelector("#sitio").value;
 	for(var i = 0; i < tablas.length; i++){
 		var tabla = tablas[i].children;
+		if(!tabla[3].checked){
+			continue;
+		}
 
 		var titulo = tabla[0].textContent;
 		var proyeccion = tabla[1].textContent;
 		var sql = tabla[2].textContent;
+
 
 		BD.fragmentarV(infoBD.sitios[indice], titulo, proyeccion, sql).then(() => {
 			alert("fragmento creado");
