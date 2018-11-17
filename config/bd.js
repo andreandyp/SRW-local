@@ -65,10 +65,43 @@ function fragmentar(sitio, nombreTabla, sql){
 	})
 }
 
+function fragmentarV(sitio, titulo, proyeccion, sqlTabla){
+	var baseFragmento;
+	console.log(sitio);
+	return mysql.createConnection({
+		host: sitio.host,
+		user: sitio.usuario,
+		database: sitio.nombreBD,
+		password: sitio.password,
+		dateStrings: true
+	}).then(function (conn) {
+		baseFragmento = conn;
+		var SQL = "CREATE TABLE "+titulo+"(" + sqlTabla +")";
+		console.log(SQL);
+		return baseFragmento.query(SQL);
+	}).then(() => {
+		return base.query("SELECT "+proyeccion+" FROM "+titulo.replace(/\w$/, ""));
+	}).then(rows => {
+		var filas = rows[0];
+		var datos = [];
+		console.log(filas.length);
+		for(var i = 0; i < filas.length; i++){
+			for(var key in filas[i]){
+				datos.push("'"+filas[i][key]+"'");
+			}
+			baseFragmento.execute("INSERT INTO " + titulo + " VALUES (" + datos.join(",") + ")");
+			datos = [];
+		}
+	}).catch(function(error){
+		return alert(error);
+	})
+}
+
 module.exports = {
 	conectar: conectar,
 	getTables: getTables,
 	getAtributos: getAtributos,
+	fragmentarV: fragmentarV,
 	desconectar: function(){
 		base.end(function(){
 			alert("Conexión terminada");

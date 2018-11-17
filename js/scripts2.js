@@ -83,6 +83,7 @@ function añadirAtributos(e){
 		var nfragmentos = document.querySelector("#nfragmentos");
 		fragmentos.disponibles = atributos.length - 1;
 		nfragmentos.setAttribute("max", atributos.length - 1);
+		nfragmentos.value = atributos.length - 1;
 		
 		var table = document.querySelector("#tablaAtributos tbody");
 		var table2 = document.querySelector("#tablaAtributos2 tbody");
@@ -125,6 +126,10 @@ function añadirAtributos(e){
 document.querySelector("#Relacion").onchange = añadirAtributos;
 
 function generarFragmentos(){
+	++fragmentos.seleccionados;
+	if(fragmentos.seleccionados > fragmentos.disponibles){
+		return alert("Ya no puedes seleccionar más fragmentos");	
+	}
 	var atributos = (document.querySelector("#tablaAtributos2 tbody")).children;
 	var expresiones = document.querySelector("#EAlgebraicas");
 	var tablaActual = document.querySelector("#Relacion").value;
@@ -132,9 +137,10 @@ function generarFragmentos(){
 	var tablaFrag = document.querySelector("#tabla-"+tablaActual);
 	if(!tablaFrag){
 		tablaFrag = document.createElement("div");
+		tablaFrag.setAttribute("id", "tabla-"+tablaActual+fragmentos.seleccionados);
 		
 		var titulo = document.createElement("h3");
-		titulo.textContent = tablaActual;
+		titulo.textContent = tablaActual+fragmentos.seleccionados;
 		titulo.style.color = "black";
 		
 		tablaFrag.appendChild(titulo);
@@ -158,25 +164,26 @@ function generarFragmentos(){
 			tablaFrag.appendChild(sql);
 		}
 	}
+
+
 }
 
 function fragmentar(){
-	var tablas = document.querySelector("#FragM").childNodes;
+	var tablas = document.querySelector("#EAlgebraicas").childNodes;
+	var indice = document.querySelector("#sitio").value;
 	for(var i = 0; i < tablas.length; i++){
-		var fragmentos = tablas[i].childNodes;
-		for(var j = 1; j < fragmentos.length; j++){
-			var fragmento = fragmentos[j].querySelector("input");
-			if (fragmento.checked) {
-				var sql = fragmentos[j].querySelector("p em").textContent;
-				var indice = document.querySelector("#sitio").value;
-				BD.fragmentar(infoBD.sitios[indice], sql.split(".")[0], sql).then(() => {
-					alert("fragmento creado");
-				}).catch(err => {
-					alert("No se pudo crear el fragmento");
-					alert(err);
-				})
-			}
-		}
+		var tabla = tablas[i].children;
+
+		var titulo = tabla[0].textContent;
+		var proyeccion = tabla[1].textContent;
+		var sql = tabla[2].textContent;
+
+		BD.fragmentarV(infoBD.sitios[indice], titulo, proyeccion, sql).then(() => {
+			alert("fragmento creado");
+		}).catch(err => {
+			alert("No se pudo crear el fragmento");
+			alert(err);
+		})
 	}
 }
 

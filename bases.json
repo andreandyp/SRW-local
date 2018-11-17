@@ -3,20 +3,20 @@
 		"host": "localhost",
 		"usuario": "root",
 		"nombreBD": "mydb",
-		"password": "Andy94"
+		"password": "root"
 	}],
 	"sitios": [{
 		"host": "localhost",
 		"usuario": "root",
 		"nombreBD": "sitio1",
-		"password": "Andy94"
+		"password": "root"
 	}, {
 		"host": "10.100.70.119",
 		"usuario": "root",
 		"nombreBD": "sitio2",
 		"password": "root"
 	}, {
-		"host": "10.100.66.212",
+		"host": "localhost",
 		"usuario": "root",
 		"nombreBD": "sitio3",
 		"password": "root"
