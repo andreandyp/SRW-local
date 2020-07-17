@@ -1,6 +1,6 @@
 var nombreBD, nombreTabla;
 var BD = require("./config/bd");
-var infoBD = require("./bases.json");
+var infoBD = require("../bases.json");
 var minis = {};
 
 function openFragmento(evt, fragName) {
@@ -18,13 +18,13 @@ function openFragmento(evt, fragName) {
 	inicializar();
 }
 
-function inicializar(){
+function inicializar() {
 	console.clear();
 	var config = require("./bases.json");
 	var basesLocales = infoBD.bases;
 	var sitios = infoBD.sitios;
 
-	for(var i = 0; i < basesLocales.length; i++){
+	for (var i = 0; i < basesLocales.length; i++) {
 		var bds = document.querySelector("#bds");
 		var option = document.createElement("option");
 		option.value = i;
@@ -45,14 +45,14 @@ function conectar() {
 	var indice = document.querySelector("#bds").value;
 	var infoBase = infoBD.bases[indice];
 	nombreBD = infoBase.nombreBD;
-	BD.conectar(infoBase.host, infoBase.usuario, nombreBD, infoBase.password).then(tablas => {
+	BD.conectar(infoBase.host, infoBase.usuario, nombreBD, infoBase.password).then((tablas) => {
 		añadirTablas(tablas);
 	});
 }
 
 function añadirTablas(tablas) {
 	var relacion = document.querySelector("#Relacion");
-	for(var i = 0; i < tablas.length; i++){
+	for (var i = 0; i < tablas.length; i++) {
 		var option = document.createElement("option");
 		option.value = tablas[i].table_name;
 		option.textContent = tablas[i].table_name;
@@ -60,7 +60,7 @@ function añadirTablas(tablas) {
 	}
 }
 
-function desconectar(){
+function desconectar() {
 	BD.desconectar();
 	var relacion = document.querySelector("#Relacion");
 	while (relacion.firstChild) {
@@ -73,9 +73,9 @@ function desconectar(){
 	}
 }
 
-function añadirAtributos(e){
+function añadirAtributos(e) {
 	nombreTabla = e.target.value;
-	BD.getAtributos(nombreBD, nombreTabla).then(atributos => {
+	BD.getAtributos(nombreBD, nombreTabla).then((atributos) => {
 		var Atributo = document.querySelector("#Atributo");
 		var tablaNAtributos = document.querySelector("#numeroAtributo");
 		var tablaAtributos = document.querySelector("#nombreAtributo");
@@ -86,11 +86,11 @@ function añadirAtributos(e){
 			Atributo.removeChild(Atributo.firstChild);
 		}
 
-		while (tablaNAtributos.firstChild){
+		while (tablaNAtributos.firstChild) {
 			tablaNAtributos.removeChild(tablaNAtributos.firstChild);
 		}
 
-		while (tablaAtributos.firstChild){
+		while (tablaAtributos.firstChild) {
 			tablaAtributos.removeChild(tablaAtributos.firstChild);
 		}
 
@@ -105,7 +105,7 @@ function añadirAtributos(e){
 			Atributo.appendChild(option);
 
 			var th = document.createElement("th");
-			th.textContent = "Atributo "+i;
+			th.textContent = "Atributo " + i;
 			tablaNAtributos.appendChild(th);
 
 			var nombre = document.createElement("td");
@@ -120,19 +120,19 @@ function añadirAtributos(e){
 }
 document.querySelector("#Relacion").onchange = añadirAtributos;
 
-function añadirPredicado(){
+function añadirPredicado() {
 	var atributo = document.querySelector("#Atributo").value;
 	var operador = document.querySelector("#Operador").value;
 	var valor = document.querySelector("#Valor").value;
 
-	if(!valor){
+	if (!valor) {
 		return alert("Inserta un valor");
 	}
 
 	var predicado = document.createElement("p");
-	var tabla = document.querySelector("#"+nombreTabla);
+	var tabla = document.querySelector("#" + nombreTabla);
 
-	if(!tabla){
+	if (!tabla) {
 		tabla = document.createElement("div");
 		tabla.setAttribute("id", nombreTabla);
 		var label = document.createElement("h4");
@@ -156,8 +156,7 @@ function añadirPredicado(){
 	strong.appendChild(opTexto);
 	strong.appendChild(document.createTextNode(valor));
 	predicado.appendChild(strong);
-	
-	
+
 	var opSQL = document.createElement("span");
 	opSQL.textContent = operador;
 	var em = document.createElement("em");
@@ -168,20 +167,22 @@ function añadirPredicado(){
 	predicado.appendChild(em);
 
 	var eliminarPS = document.createElement("button");
-	eliminarPS.classList.add("btn", "btn-danger")
+	eliminarPS.classList.add("btn", "btn-danger");
 	eliminarPS.textContent = "Eliminar";
-	eliminarPS.onclick = function () { eliminarPredicado(this); }
+	eliminarPS.onclick = function () {
+		eliminarPredicado(this);
+	};
 	predicado.appendChild(eliminarPS);
 
 	tabla.appendChild(predicado);
 }
 
-function obtenerOperador(op, negacion){
-	if(!negacion){
+function obtenerOperador(op, negacion) {
+	if (!negacion) {
 		return op;
 	}
-	
-	switch(op){
+
+	switch (op) {
 		case "<":
 			return ">";
 		case "<=":
@@ -197,77 +198,75 @@ function obtenerOperador(op, negacion){
 	}
 }
 
-function validarPS(){
+function validarPS() {
 	var predicados = document.querySelector("#predicados");
 	var tablas = predicados.childNodes;
 	var predis, sql;
 
-	for(var i = 0; i < tablas.length; i++){
+	for (var i = 0; i < tablas.length; i++) {
 		predis = tablas[i].childNodes;
-		for(var j = 1; j < predis.length; j++){
+		for (var j = 1; j < predis.length; j++) {
 			var elem = predis[j];
 			sql = elem.childNodes[elem.childNodes.length - 2].textContent;
-			BD.validarPredicado(sql.split(".")[0], sql, elem).then(filas => {
-				if(filas[0].length !== 0){
+			BD.validarPredicado(sql.split(".")[0], sql, elem).then((filas) => {
+				if (filas[0].length !== 0) {
 					filas.elemento.firstChild.disabled = false;
 					filas.elemento.style.backgroundColor = "green";
 					filas.elemento.style.color = "white";
-				}else{
+				} else {
 					filas.elemento.style.backgroundColor = "red";
 					filas.elemento.style.color = "white";
-					
 				}
 			});
 		}
 	}
-	
 }
 
-function obtenerPS(minitermino){
+function obtenerPS(minitermino) {
 	var tablas = document.querySelector("#predicados").childNodes;
 
-	for(var i = 0; i < tablas.length; i++){
+	for (var i = 0; i < tablas.length; i++) {
 		var predicados = [];
 		var tabla = tablas[i].childNodes;
 		//Desde 1 para omitir el nombre de la tabla
-		for(var j = 1; j < tabla.length; j++){
+		for (var j = 1; j < tabla.length; j++) {
 			var predicado = tabla[j].querySelector("input");
-			if(predicado.checked){
+			if (predicado.checked) {
 				predicados.push(tabla[j]);
 			}
 		}
 
-		if(predicados.length >= 2){
+		if (predicados.length >= 2) {
 			crearMinis(predicados, tabla[0].textContent);
 		}
 	}
 }
 
-function crearMinis(predicados, nombreTabla){
+function crearMinis(predicados, nombreTabla) {
 	var pred1, pre2;
-	var tablaActual = document.querySelector("#"+nombreTabla+"-minis");
-	if(!tablaActual){
+	var tablaActual = document.querySelector("#" + nombreTabla + "-minis");
+	if (!tablaActual) {
 		tablaActual = document.createElement("div");
-		tablaActual.id = nombreTabla+"-minis";
+		tablaActual.id = nombreTabla + "-minis";
 		tablaActual.style.backgroundColor = "white";
 		tablaActual.style.color = "black";
 		var h4 = document.createElement("h4");
 		h4.textContent = nombreTabla;
 		tablaActual.appendChild(h4);
 
-		(document.querySelector("#FragM")).appendChild(tablaActual);
+		document.querySelector("#FragM").appendChild(tablaActual);
 	}
-	for(var i = 0, j = 1; i < predicados.length; i++, j++){
+	for (var i = 0, j = 1; i < predicados.length; i++, j++) {
 		pred1 = predicados[i];
 		pred2 = predicados[j];
-		if(!pred2){
+		if (!pred2) {
 			return;
 		}
 
 		var num = 0;
-		while(num < 4){
+		while (num < 4) {
 			var negacion1, negacion2;
-			switch(num){
+			switch (num) {
 				case 0:
 					negacion1 = false;
 					negacion2 = false;
@@ -289,7 +288,7 @@ function crearMinis(predicados, nombreTabla){
 				texto = document.createElement("strong"),
 				sql = document.createElement("em");
 
-			input.type = "checkbox"
+			input.type = "checkbox";
 			input.disabled = true;
 
 			texto.textContent = negacion1 ? "~(" : "";
@@ -301,18 +300,26 @@ function crearMinis(predicados, nombreTabla){
 			texto.textContent += negacion2 ? ")" : "";
 
 			sql.textContent = pred1.querySelector("em").childNodes[0].textContent;
-			sql.textContent += obtenerOperador(pred1.querySelector("em").childNodes[1].textContent, negacion1);
+			sql.textContent += obtenerOperador(
+				pred1.querySelector("em").childNodes[1].textContent,
+				negacion1,
+			);
 			sql.textContent += pred1.querySelector("em").childNodes[2].textContent;
 			sql.textContent += " AND ";
 			sql.textContent += pred2.querySelector("em").childNodes[0].textContent;
-			sql.textContent += obtenerOperador(pred2.querySelector("em").childNodes[1].textContent, negacion2);
+			sql.textContent += obtenerOperador(
+				pred2.querySelector("em").childNodes[1].textContent,
+				negacion2,
+			);
 			sql.textContent += pred2.querySelector("em").childNodes[2].textContent;
 			sql.style.display = "block";
 
 			var eliminarMini = document.createElement("button");
-			eliminarMini.classList.add("btn", "btn-danger")
+			eliminarMini.classList.add("btn", "btn-danger");
 			eliminarMini.textContent = "Eliminar";
-			eliminarMini.onclick = function () { eliminarMT(this); }
+			eliminarMini.onclick = function () {
+				eliminarMT(this);
+			};
 
 			p.appendChild(input);
 			p.appendChild(texto);
@@ -328,18 +335,17 @@ function crearMinis(predicados, nombreTabla){
 			++num;
 		}
 	}
-
 }
 
 function validarMinis() {
 	var tablas = document.querySelector("#FragM").childNodes;
-	for(var n = 0; n < tablas.length; n++){
+	for (var n = 0; n < tablas.length; n++) {
 		var minis = tablas[n].childNodes;
 		//Desde 1 para omitir el título
 		for (var i = 1; i < minis.length; i++) {
-			var elem = minis[i].querySelector("p em");			
+			var elem = minis[i].querySelector("p em");
 			var sql = elem.textContent;
-			BD.validarPredicado(sql.split(".")[0], sql, minis[i]).then(filas => {
+			BD.validarPredicado(sql.split(".")[0], sql, minis[i]).then((filas) => {
 				if (filas[0].length !== 0) {
 					filas.elemento.firstChild.firstChild.disabled = false;
 					filas.elemento.style.backgroundColor = "green";
@@ -353,30 +359,34 @@ function validarMinis() {
 	}
 }
 
-function fragmentar(){
+function fragmentar() {
 	var tablas = document.querySelector("#FragM").childNodes;
-	for(var i = 0; i < tablas.length; i++){
+	for (var i = 0; i < tablas.length; i++) {
 		var fragmentos = tablas[i].childNodes;
-		for(var j = 1; j < fragmentos.length; j++){
+		for (var j = 1; j < fragmentos.length; j++) {
 			var fragmento = fragmentos[j].querySelector("input");
 			if (fragmento.checked) {
 				var sql = fragmentos[j].querySelector("p em").textContent;
 				var indice = document.querySelector("#sitio").value;
-				BD.fragmentar(infoBD.sitios[indice], sql.split(".")[0], sql).then(() => {
-					alert("fragmento creado");
-				}).catch(err => {
-					alert("No se pudo crear el fragmento");
-					alert(err);
-				})
+				BD.fragmentar(infoBD.sitios[indice], sql.split(".")[0], sql)
+					.then(() => {
+						alert("fragmento creado");
+					})
+					.catch((err) => {
+						alert("No se pudo crear el fragmento");
+						alert(err);
+					});
 			}
 		}
 	}
 }
 
-function eliminarPredicado(elemento){
+function eliminarPredicado(elemento) {
 	elemento.parentElement.parentElement.removeChild(elemento.parentElement);
 }
 
 function eliminarMT(elemento) {
-	elemento.parentElement.parentElement.parentElement.removeChild(elemento.parentElement.parentElement);
+	elemento.parentElement.parentElement.parentElement.removeChild(
+		elemento.parentElement.parentElement,
+	);
 }
