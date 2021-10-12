@@ -10,7 +10,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "electron": "^11.2.3"
+    "electron": "^11.5.0"
   },
   "dependencies": {
     "mysql2": "^2.1.0"
